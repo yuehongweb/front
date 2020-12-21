@@ -15,78 +15,85 @@
                 <div class="layui-form-item">
                   <label for="L_email" class="layui-form-label">邮箱</label>
                   <div class="layui-input-inline">
+                    <validation-provider name="邮箱" rules="required|email" v-slot="{ errors }">
                     <input
                       type="text"
-                      id="L_email"
                       name="email"
-                      required
-                      lay-verify="email"
+                      v-model="email"
+                      placeholder="请输入邮箱"
                       autocomplete="off"
                       class="layui-input"
                     />
+                    <span class="text_error">{{ errors[0] }}</span>
+                    </validation-provider>
                   </div>
                   <div class="layui-form-mid layui-word-aux">将会成为您唯一的登入名</div>
                 </div>
                 <div class="layui-form-item">
                   <label for="L_username" class="layui-form-label">昵称</label>
                   <div class="layui-input-inline">
+                    <validation-provider name="昵称" rules="required" v-slot="{ errors }">
                     <input
                       type="text"
-                      id="L_username"
                       name="username"
-                      required
-                      lay-verify="required"
+                      v-model="username"
+                      placeholder="请输入昵称"
                       autocomplete="off"
                       class="layui-input"
                     />
+                     <span class="text_error">{{ errors[0] }}</span>
+                    </validation-provider>
                   </div>
                 </div>
                 <div class="layui-form-item">
                   <label for="L_pass" class="layui-form-label">密码</label>
                   <div class="layui-input-inline">
+                    <validation-provider name="密码" rules="required|min:6" v-slot="{ errors }">
                     <input
                       type="password"
-                      id="L_pass"
-                      name="pass"
-                      required
-                      lay-verify="required"
+                      name="password"
+                      v-model="password"
+                      placeholder="请输入密码"
                       autocomplete="off"
                       class="layui-input"
                     />
+                     <span class="text_error">{{ errors[0] }}</span>
+                    </validation-provider>
                   </div>
                   <div class="layui-form-mid layui-word-aux">6到16个字符</div>
                 </div>
                 <div class="layui-form-item">
                   <label for="L_repass" class="layui-form-label">确认密码</label>
                   <div class="layui-input-inline">
+                    <validation-provider name="确认密码" rules="required|min:6" v-slot="{ errors }">
                     <input
                       type="password"
-                      id="L_repass"
-                      name="repass"
-                      required
-                      lay-verify="required"
+                      name="repassword"
+                      v-model="repassword"
+                      placeholder="请输入确认密码"
                       autocomplete="off"
                       class="layui-input"
                     />
+                     <span class="text_error">{{ errors[0] }}</span>
+                    </validation-provider>
                   </div>
                 </div>
                 <div class="layui-form-item">
-                  <label for="L_vercode" class="layui-form-label">人类验证</label>
+                  <label for="L_vercode" class="layui-form-label">验证码</label>
                   <div class="layui-input-inline">
+                    <validation-provider name="验证码" rules="required|length:4" v-slot="{ errors }">
                     <input
                       type="text"
-                      id="L_vercode"
-                      name="vercode"
-                      required
-                      lay-verify="required"
-                      placeholder="请回答后面的问题"
+                      name="code"
+                      v-model="code"
+                      placeholder="请输入验证码"
                       autocomplete="off"
                       class="layui-input"
                     />
+                     <span class="text_error">{{ errors[0] }}</span>
+                    </validation-provider>
                   </div>
-                  <div class="layui-form-mid">
-                    <span style="color: #c00;">Hello</span>
-                  </div>
+                 <div class="cursor_pointer svg" v-html="svg" @click="_getCaptcha"></div>
                 </div>
                 <div class="layui-form-item">
                   <button class="layui-btn" lay-filter="*" lay-submit>立即注册</button>
@@ -116,6 +123,7 @@
 </template>
 
 <script>
+import { getCaptcha } from '@/api/login'
 export default {
   name: 'Register',
   props: {
@@ -126,7 +134,12 @@ export default {
   },
   data () {
     return {
-
+      email: '',
+      username: '',
+      password: '',
+      repassword: '',
+      code: '',
+      svg: ''
     }
   },
   computed: {
@@ -136,13 +149,20 @@ export default {
 
   },
   mounted () {
-
+    this._getCaptcha()
   },
   watch: {
 
   },
   methods: {
-
+    _getCaptcha () {
+      getCaptcha().then(res => {
+        const { code, data } = res
+        if (code === 200) {
+          this.svg = data
+        }
+      })
+    }
   }
 }
 </script>

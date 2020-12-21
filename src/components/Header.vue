@@ -75,7 +75,7 @@
 
 <script>
 export default {
-  name: 'header'
+  name: 'Feader'
 }
 </script>
 

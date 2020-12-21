@@ -57,34 +57,35 @@
                 <div class="layui-form-item">
                   <label for="L_email" class="layui-form-label">邮箱</label>
                   <div class="layui-input-inline">
+                    <validation-provider name="邮箱" rules="required|email" v-slot="{ errors }">
                     <input
                       type="text"
-                      id="L_email"
                       name="email"
-                      required
-                      lay-verify="required"
+                      v-model="email"
+                      placeholder="请输入邮箱"
                       autocomplete="off"
                       class="layui-input"
                     />
+                      <span class="text_error">{{ errors[0] }}</span>
+                    </validation-provider>
                   </div>
                 </div>
                 <div class="layui-form-item">
-                  <label for="L_vercode" class="layui-form-label">人类验证</label>
+                  <label for="L_vercode" class="layui-form-label">验证码</label>
                   <div class="layui-input-inline">
+                    <validation-provider name="验证码" rules="required|length:4" v-slot="{ errors }">
                     <input
                       type="text"
-                      id="L_vercode"
-                      name="vercode"
-                      required
-                      lay-verify="required"
-                      placeholder="请回答后面的问题"
+                      name="code"
+                      v-model="code"
+                      placeholder="请输入验证码"
                       autocomplete="off"
                       class="layui-input"
                     />
+                      <span class="text_error">{{ errors[0] }}</span>
+                    </validation-provider>
                   </div>
-                  <div class="layui-form-mid">
-                    <span style="color: #c00;">Hello</span>
-                  </div>
+                 <div class="cursor_pointer svg" v-html="svg" @click="_getCaptcha"></div>
                 </div>
                 <div class="layui-form-item">
                   <button class="layui-btn" alert="1" lay-filter="*" lay-submit>提交</button>
@@ -99,6 +100,7 @@
 </template>
 
 <script>
+import { getCaptcha } from '@/api/login'
 export default {
   name: 'Forget',
   props: {
@@ -109,7 +111,9 @@ export default {
   },
   data () {
     return {
-
+      email: '',
+      code: '',
+      svg: ''
     }
   },
   computed: {
@@ -119,13 +123,20 @@ export default {
 
   },
   mounted () {
-
+    this._getCaptcha()
   },
   watch: {
 
   },
   methods: {
-
+    _getCaptcha () {
+      getCaptcha().then(res => {
+        const { code, data } = res
+        if (code === 200) {
+          this.svg = data
+        }
+      })
+    }
   }
 }
 </script>
