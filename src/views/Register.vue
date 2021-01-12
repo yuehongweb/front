@@ -15,7 +15,7 @@
                 <div class="layui-form-item">
                   <label for="L_email" class="layui-form-label">邮箱</label>
                   <div class="layui-input-inline">
-                    <validation-provider name="邮箱" rules="required|email" v-slot="{ errors }">
+                    <validation-provider name="email" rules="required|email" v-slot="{ errors }">
                     <input
                       type="text"
                       name="email"
@@ -32,7 +32,7 @@
                 <div class="layui-form-item">
                   <label for="L_username" class="layui-form-label">昵称</label>
                   <div class="layui-input-inline">
-                    <validation-provider name="昵称" rules="required" v-slot="{ errors }">
+                    <validation-provider name="username" rules="required" v-slot="{ errors }">
                     <input
                       type="text"
                       name="username"
@@ -48,7 +48,7 @@
                 <div class="layui-form-item">
                   <label for="L_pass" class="layui-form-label">密码</label>
                   <div class="layui-input-inline">
-                    <validation-provider name="密码" rules="required|min:6" v-slot="{ errors }">
+                    <validation-provider name="password" rules="required|min:6" v-slot="{ errors }">
                     <input
                       type="password"
                       name="password"
@@ -65,7 +65,7 @@
                 <div class="layui-form-item">
                   <label for="L_repass" class="layui-form-label">确认密码</label>
                   <div class="layui-input-inline">
-                    <validation-provider name="确认密码" rules="required|min:6" v-slot="{ errors }">
+                    <validation-provider name="password" rules="required|min:6" v-slot="{ errors }">
                     <input
                       type="password"
                       name="repassword"
@@ -81,7 +81,7 @@
                 <div class="layui-form-item">
                   <label for="L_vercode" class="layui-form-label">验证码</label>
                   <div class="layui-input-inline">
-                    <validation-provider name="验证码" rules="required|length:4" v-slot="{ errors }">
+                    <validation-provider name="code" rules="required|length:4" v-slot="{ errors }">
                     <input
                       type="text"
                       name="code"

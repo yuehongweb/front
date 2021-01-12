@@ -63,7 +63,7 @@
                     <label for="L_email" class="layui-form-label">邮箱</label>
                     <div class="layui-input-inline">
                       <validation-provider
-                        name="邮箱"
+                        name="username"
                         rules="required|email"
                         v-slot="{ errors }"
                       >
@@ -85,7 +85,7 @@
                     >
                     <div class="layui-input-inline">
                       <validation-provider
-                        name="验证码"
+                        name="code"
                         rules="required|length:4"
                         v-slot="{ errors }"
                       >

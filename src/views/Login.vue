@@ -19,7 +19,7 @@
                 <div class="layui-form-item">
                   <label for="L_email" class="layui-form-label">用户名</label>
                   <div class="layui-input-inline">
-                    <validation-provider name="用户名" rules="required|email" v-slot="{ errors }">
+                    <validation-provider name="username" rules="required|email" v-slot="{ errors }">
                       <input
                         type="text"
                         name="username"
@@ -35,7 +35,7 @@
                 <div class="layui-form-item">
                   <label for="L_pass" class="layui-form-label">密码</label>
                   <div class="layui-input-inline">
-                    <validation-provider name="密码" rules="required|min:6" v-slot="{ errors }">
+                    <validation-provider name="password" rules="required|min:6" v-slot="{ errors }">
                     <input
                       type="password"
                       name="password"
@@ -53,7 +53,7 @@
                     >验证码</label
                   >
                   <div class="layui-input-inline">
-                    <validation-provider name="验证码" rules="required|length:4" v-slot="{ errors }">
+                    <validation-provider name="code" rules="required|length:4" v-slot="{ errors }">
                     <input
                       type="text"
                       name="code"
