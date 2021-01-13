@@ -162,6 +162,7 @@ export default {
           username: this.username,
           code: this.code
         }).then(res => {
+          console.log(res)
           if (res.code === 200) {
             console.log(res.data)
             alert('邮件发送成功')

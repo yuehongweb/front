@@ -4,35 +4,24 @@ import {
   ValidationProvider,
   ValidationObserver,
   extend,
-  localize
+  configure
 } from 'vee-validate'
 import { required, email, length, min } from 'vee-validate/dist/rules'
-import zh from 'vee-validate/dist/locale/zh_CN.json'
+import { i18n } from './i18n'
+
+configure({
+  defaultMessage: (field, values) => {
+    // override the field name.
+    values._field_ = i18n.t(`fields.${field}`)
+
+    return i18n.t(`validation.${values._rule_}`, values)
+  }
+})
 
 extend('email', email)
 extend('required', required)
 extend('length', length)
 extend('min', min)
-
-localize('zh_CN', {
-  messages: {
-    ...zh.messages,
-    required: '请输入{_field_}'
-  },
-  names: {
-    email: '邮箱',
-    password: '密码',
-    name: '昵称',
-    username: '账号',
-    code: '验证码'
-  },
-  fields: {
-    username: {
-      email: '请输入正确的{_field_}',
-      required: '请输入{_field_}77'
-    }
-  }
-})
 
 // 设置为全局组件
 Vue.component('ValidationProvider', ValidationProvider)
