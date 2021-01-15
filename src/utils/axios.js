@@ -36,7 +36,7 @@ class httpResqut {
     instance.interceptors.response.use((res) => {
       // Any status code that lie within the range of 2xx cause this function to trigger
       // Do something with response data
-      if (res.status === 200) {
+      if (res.status === 200 && res.data.code === 200) {
         return Promise.resolve(res.data)
       } else {
         return Promise.reject(res)

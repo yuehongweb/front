@@ -107,11 +107,7 @@
                     ></div>
                   </div>
                   <div class="layui-form-item">
-                    <button
-                      type="button"
-                      class="layui-btn"
-                      @click="submit"
-                    >
+                    <button type="button" class="layui-btn" @click="submit">
                       提交
                     </button>
                   </div>
@@ -135,48 +131,36 @@ export default {
     return {
       username: '',
       code: '',
-      svg: ''
+      svg: '',
+      sid: ''
     }
   },
   computed: {},
   created () {},
   mounted () {
+    this.sid = localStorage.getItem('sid')
     this._getCaptcha()
   },
   watch: {},
   methods: {
-    _getCaptcha () {
-      getCaptcha().then(res => {
-        const { code, data } = res
-        if (code === 200) {
-          this.svg = data
-        }
-      })
+    /**
+     * 获取验证码
+     */
+    async _getCaptcha () {
+      const { data } = await getCaptcha({ sid: this.sid })
+      this.svg = data
     },
-    submit () {
-      this.$refs.form.validate().then(success => {
-        if (!success) {
-          return
-        }
-        forget({
-          username: this.username,
-          code: this.code
-        }).then(res => {
-          console.log(res)
-          if (res.code === 200) {
-            console.log(res.data)
-            alert('邮件发送成功')
-            this.$nextTick(() => {
-              this.$refs.form.reset()
-            })
-          }
-        })
+    async submit () {
+      const validRes = this.$refs.form.validate()
+      if (!validRes) return
+      await forget({
+        username: this.username,
+        code: this.code
       })
+      alert('邮件发送成功')
     }
   }
 }
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

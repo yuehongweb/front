@@ -5,8 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    password: ''
   },
   mutations: {
+    setComPass (state, value) {
+      state.password = value
+    }
   },
   actions: {
   },
