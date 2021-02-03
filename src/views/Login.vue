@@ -171,10 +171,12 @@ export default {
       const params = {
         username: this.username,
         password: this.password,
-        code: this.code
+        code: this.code,
+        sid: localStorage.getItem('sid')
       }
 
-      await login(params)
+      const { token } = await login(params)
+      console.log(token)
     }
   }
 }
