@@ -143,6 +143,7 @@ export default {
   computed: {},
   created () {},
   mounted () {
+    window.app = this
     this._getCaptcha()
   },
   watch: {},
