@@ -127,7 +127,6 @@
 <script>
 import { getCaptcha, login } from '@/api/login'
 import { v4 as uuidv4 } from 'uuid'
-
 export default {
   name: 'login',
   props: {},
@@ -143,7 +142,6 @@ export default {
   computed: {},
   created () {},
   mounted () {
-    window.app = this
     this._getCaptcha()
   },
   watch: {},
@@ -154,6 +152,8 @@ export default {
       let sid = null
       if (!localStorage.getItem('sid')) {
         sid = uuidv4()
+        this.$store.commit('setSid', sid)
+        console.log(this.$store.state.sid, '222')
         localStorage.setItem('sid', sid)
       } else {
         sid = localStorage.getItem('sid')
@@ -175,9 +175,25 @@ export default {
         code: this.code,
         sid: localStorage.getItem('sid')
       }
-
-      const { token } = await login(params)
-      console.log(token)
+      try {
+        const { token } = await login(params)
+        localStorage.setItem('token', token)
+        // 清空表单
+        this.username = ''
+        this.password = ''
+        this.code = ''
+        requestAnimationFrame(() => {
+          this.$refs.form.reset()
+        })
+      } catch (error) {
+        if (error.data.code !== 401) {
+          this.$alert(error.data.msg)
+        } else {
+          this.$refs.form.setErrors({
+            code: ['验证码错误']
+          })
+        }
+      }
     }
   }
 }

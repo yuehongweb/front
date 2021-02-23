@@ -6,7 +6,7 @@ import {
   extend,
   configure
 } from 'vee-validate'
-import { required, email, length, min } from 'vee-validate/dist/rules'
+import { required, email, length, min, confirmed } from 'vee-validate/dist/rules'
 import { i18n } from './i18n'
 import store from '@/store'
 
@@ -23,6 +23,7 @@ extend('email', email)
 extend('required', required)
 extend('length', length)
 extend('min', min)
+extend('confirmed', confirmed)
 extend('nickname', value => {
   // 昵称不能是纯数字，长度大于4
   if (value.length < 4) {

@@ -5,11 +5,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    password: ''
+    password: '',
+    sid: ''
   },
   mutations: {
     setComPass (state, value) {
       state.password = value
+    },
+    setSid (state, value) {
+      state.sid = value
     }
   },
   actions: {

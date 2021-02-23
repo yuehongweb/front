@@ -21,14 +21,14 @@
                     <label for="L_email" class="layui-form-label">邮箱</label>
                     <div class="layui-input-inline">
                       <validation-provider
-                        name="email"
+                        name="username"
                         rules="required|email"
                         v-slot="{ errors }"
                       >
                         <input
                           type="text"
-                          name="email"
-                          v-model="email"
+                          name="username"
+                          v-model="username"
                           placeholder="请输入邮箱"
                           autocomplete="off"
                           class="layui-input"
@@ -46,14 +46,14 @@
                     >
                     <div class="layui-input-inline">
                       <validation-provider
-                        name="username"
+                        name="nickname"
                         rules="required|nickname"
                         v-slot="{ errors }"
                       >
                         <input
                           type="text"
-                          name="username"
-                          v-model="username"
+                          name="nickname"
+                          v-model="nickname"
                           placeholder="请输入昵称"
                           autocomplete="off"
                           class="layui-input"
@@ -67,7 +67,7 @@
                     <div class="layui-input-inline">
                       <validation-provider
                         name="password"
-                        rules="required|min:6"
+                        rules="required|min:6|confirmed:确认密码"
                         v-slot="{ errors }"
                       >
                         <input
@@ -88,11 +88,7 @@
                       >确认密码</label
                     >
                     <div class="layui-input-inline">
-                      <validation-provider
-                        name="repassword"
-                        rules="required|confirmPassword"
-                        v-slot="{ errors }"
-                      >
+                      <validation-provider v-slot="{ errors }" vid="确认密码">
                         <input
                           type="password"
                           name="repassword"
@@ -133,7 +129,12 @@
                     ></div>
                   </div>
                   <div class="layui-form-item">
-                    <button class="layui-btn" lay-filter="*" lay-submit @click.prevent="submit">
+                    <button
+                      class="layui-btn"
+                      lay-filter="*"
+                      lay-submit
+                      @click.prevent="submit"
+                    >
                       立即注册
                     </button>
                   </div>
@@ -163,20 +164,19 @@
 </template>
 
 <script>
-import { getCaptcha } from '@/api/login'
+import { getCaptcha, reg } from '@/api/login'
 export default {
   name: 'Register',
   props: {},
   components: {},
   data () {
     return {
-      email: '',
+      nickname: '',
       username: '',
       password: '',
       repassword: '',
       code: '',
-      svg: '',
-      sid: ''
+      svg: ''
     }
   },
   computed: {},
@@ -189,7 +189,6 @@ export default {
   },
   created () {},
   mounted () {
-    this.sid = localStorage.getItem('sid')
     this._getCaptcha()
   },
   methods: {
@@ -197,7 +196,8 @@ export default {
      * 获取验证码
      */
     async _getCaptcha () {
-      const { data } = await getCaptcha({ sid: this.sid })
+      const sid = this.$store.state.sid
+      const { data } = await getCaptcha({ sid })
       this.svg = data
     },
 
@@ -207,6 +207,32 @@ export default {
     async submit () {
       const validRes = await this.$refs.form.validate()
       console.log(validRes, 'res')
+      const params = {
+        username: this.username,
+        nickname: this.nickname,
+        password: this.password,
+        code: this.code,
+        sid: localStorage.getItem('sid')
+      }
+      try {
+        await reg(params)
+        // 清空表单
+        this.username = ''
+        this.password = ''
+        this.nickname = ''
+        this.code = ''
+        this.repassword = ''
+        requestAnimationFrame(() => {
+          this.$refs.form.reset()
+        })
+
+        // 注册成功之后跳转至登录页面
+        setTimeout(() => {
+          this.$router.push('/')
+        }, 1000)
+      } catch (error) {
+        this.$refs.form.setErrors(error.data.msg)
+      }
     }
   }
 }

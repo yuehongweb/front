@@ -11,8 +11,7 @@ const i18n = new VueI18n({
       fields: {
         email: '邮箱',
         password: '密码',
-        repassword: '确认密码',
-        name: '昵称',
+        nickname: '昵称',
         username: '账号',
         code: '验证码'
       },

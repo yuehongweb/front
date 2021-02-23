@@ -24,8 +24,17 @@ const login = async (pramas) => {
   return axios.post('login/login', { ...pramas })
 }
 
+/**
+ * 注册接口
+ * @param {*} pramas 用户名、密码、验证码、昵称 注册用户信息
+ */
+const reg = async (pramas) => {
+  return axios.post('login/reg', { ...pramas })
+}
+
 export {
   getCaptcha,
   forget,
-  login
+  login,
+  reg
 }
