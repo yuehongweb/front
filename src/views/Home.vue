@@ -1,27 +1,18 @@
 <template>
   <div>
-    <div class="panel">
-      <div class="layui-container">
-        <!-- 导航区域 -->
-        <ul class="layui-clear">
-          <li class="layui-hide-xs"><a href="">首页</a></li>
-          <li><a href="">提问</a></li>
-          <li><a href="">分享<span class="layui-badge-dot"></span></a></li>
-          <li><a href="">讨论</a></li>
-          <li><a href="">建议</a></li>
-          <li><a href="">公告</a></li>
-          <li><a href="">动态</a></li>
-          <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="line"></span></li>
-          <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="">我发表的帖</a></li>
-          <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="">我收藏的帖</a></li>
-        </ul>
-        <!-- 搜索区域 -->
-        <div class="panel-right layui-hide-xs">
-          <div class="search"><i class="layui-icon">&#xe615;</i></div>
-          <a class="layui-btn">发表新帖</a>
-        </div>
-        <div class="layui-show-xs-block layui-hide-sm yh-row-center">
-          <a class="layui-btn">发表新帖</a>
+    <yh-panel></yh-panel>
+    <div class="layui-container ">
+      <div class="layui-row layui-col-space10">
+        <yh-list></yh-list>
+        <div
+          class="yh-list-sidbar layui-col-md4 layui-hide-sm layui-hide-xs layui-show-md-inline-block"
+        >
+          <yh-tips></yh-tips>
+          <yh-sign></yh-sign>
+          <yh-weekly></yh-weekly>
+          <yh-ads></yh-ads>
+          <yh-hots></yh-hots>
+          <yh-links></yh-links>
         </div>
       </div>
     </div>
@@ -29,10 +20,25 @@
 </template>
 
 <script>
+import Panel from '@/components/Panel'
+import List from '@/components/contents/List'
+import Tips from '@/components/sidbars/Tips'
+import Sign from '@/components/sidbars/Sign'
+import Weekly from '@/components/sidbars/Weekly'
+import Ads from '@/components/sidbars/Ads'
+import Links from '@/components/sidbars/Links'
 export default {
   name: 'home',
   props: {},
-  components: {},
+  components: {
+    'yh-panel': Panel,
+    'yh-list': List,
+    'yh-tips': Tips,
+    'yh-sign': Sign,
+    'yh-weekly': Weekly,
+    'yh-ads': Ads,
+    'yh-links': Links
+  },
   data () {
     return {}
   },
@@ -44,63 +50,4 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-@media screen and(max-width: 768px) {
-  .panel {
-    height: auto !important;
-    ul {
-      padding: 10px;
-      li {
-        float: left;
-        width: 33.33%;
-        height: 36px !important;
-        line-height: 36px !important;
-        text-align: center;
-      }
-    }
-  }
-}
-.panel {
-  background-color: #fff;
-  height: 50px;
-  line-height: 50px;
-  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.05);
-  .layui-container {
-    position: relative;
-  }
-  ul {
-    li {
-      display: inline-block;
-      height: 50px;
-      a {
-        padding: 0 20px;
-      }
-      .line {
-        display: inline-block;
-        height: 15px;
-        width: 1px;
-        background-color: #e2e2e2;
-        vertical-align: middle;
-      }
-    }
-  }
-  .panel-right {
-    position: absolute;
-    top: 0;
-    right: 0;
-    .search {
-      display: inline-block;
-      height: 50px;
-      margin-right: 20px;
-      vertical-align: top;
-      i {
-        font-size: 20px;
-      }
-    }
-  }
-  .yh-row-center {
-    text-align: center;
-    padding-bottom: 15px;
-  }
-}
-</style>
+<style scoped lang="scss"></style>

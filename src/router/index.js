@@ -23,7 +23,6 @@ const routes = [
     name: 'register',
     component: Register,
     beforeEnter: (to, from, next) => {
-      console.log(from, 'from')
       if (from.name === 'login') {
         next()
       } else {

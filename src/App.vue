@@ -22,5 +22,16 @@ export default {
 @import "assets/layui/css/layui.css";
 @import "assets/css/global.css";
 @import "assets/layui/css/modules/layer/default/layer.css";
+.yh-line{
+  &::after{
+    content: ' ';
+    width: 1px;
+    height: 16px;
+    background-color: #e2e2e2;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 20px;
+  }
+}
 
 </style>
